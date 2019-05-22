@@ -1,36 +1,49 @@
 #include <MeggyJrSimple.h>
 
-int x, y;
 int xapple = random(8);
 int yapple = random(8);
-int direction = 0; 
+int direction = 3;
+int marker = 1;
+int ApplesEaten;
 
 boolean gotApple = false;
+
+struct Point
+{
+  int x;
+  int y;
+  int color;
+};
+
+Point s1 = {3, 4, 1};
+
+Point SnakeArray[64] = {s1};
 
 
 void setup() 
 {
   MeggyJrSimpleSetup();
-  x=2;
-  y=2;
 }
 
 
 void loop()
 {
-  DrawPlayer();
-  MovePlayer();
-  Direction();
   Spawn();
+  DrawSnake();
+  UpdateSnake();
+  MovePlayer();
   EatApple();
   DisplaySlate();
   delay(150);
   ClearSlate();
 }
-  
-void DrawPlayer()
+
+void DrawSnake()
 {
-  DrawPx(x, y, 1);
+  for(int i = 0; i < marker; i++)
+  {
+    DrawPx(SnakeArray[i].x, SnakeArray[i].y, SnakeArray[i].color);
+  }
 }
 
 void MovePlayer()
@@ -67,59 +80,65 @@ void EatApple()
   {
     xapple = random(8);
     yapple = random(8);
+    marker++;
     gotApple = false;
   }
-  if(x == xapple && y == yapple)
+  if(SnakeArray[0].x == xapple && SnakeArray[0].y == yapple)
   {
     Tone_Start(1900, 100);
     gotApple = true;
   }
 }
 
-void Direction()
+
+void UpdateSnake() //runs loop backwards
 {
+  for (int i = marker-1; i > 0; i--)
+  {
+    SnakeArray[i] = SnakeArray[i-1];
+  }
   if(direction == 0)
   {
-    if(y<7)
+    if(SnakeArray[0].y < 7)
     {
-      y++;
+      SnakeArray[0].y++;
     }
     else
     {
-      y=0;
-    }
-  }
-  if(direction == 2)
-  {
-    if(y>0)
-    {
-      y--;
-    }
-    else
-    {
-      y=7;
+      SnakeArray[0].y = 0;
     }
   }
   if(direction == 1)
   {
-    if(x<7)
+    if(SnakeArray[0].x < 7)
     {
-      x++;
+      SnakeArray[0].x++;
     }
     else
     {
-      x = 0;
+      SnakeArray[0].x = 0;
+    }
+  }
+  if(direction == 2)
+  {
+    if(SnakeArray[0].y > 0)
+    {
+      SnakeArray[0].y--;
+    }
+    else
+    {
+      SnakeArray[0].y = 7;
     }
   }
   if(direction == 3)
   {
-    if(x>0)
+    if(SnakeArray[0].x > 0)
     {
-      x--;
+      SnakeArray[0].x--;
     }
     else
     {
-      x = 7;
+      SnakeArray[0].x = 7;
     }
   }
 }
