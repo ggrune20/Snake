@@ -164,6 +164,7 @@ void Die()
   {
     if(SnakeArray[0].x == SnakeArray[i].x && SnakeArray[0].y == SnakeArray[i].y)
     {
+      Tone_Start(ToneDs5, 500);
       marker = 1;
     }
   }
