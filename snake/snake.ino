@@ -47,7 +47,7 @@ void DrawSnake() //creates snake
   }
 }
 
-void MovePlayer() //allows player to move using direction buttons
+void MovePlayer() //allows player to move using direction buttons. Also, Buttons A and B change colors of snake)
 {
   CheckButtonsPress();
   if(Button_Up)
@@ -65,6 +65,20 @@ void MovePlayer() //allows player to move using direction buttons
   if(Button_Left)
   {
     direction = 3;
+  }
+  if(Button_A)
+  {
+    for(int i = 0; i < marker; i++)
+    {
+      SnakeArray[i].color++;
+    }
+  }
+  if(Button_B)
+  {
+    for(int i = 0; i < marker; i++)
+    {
+      SnakeArray[i].color--;
+    }
   }
 }
 
@@ -154,3 +168,6 @@ void Die()
     }
   }
 }
+
+//void LEDlights()
+//{
