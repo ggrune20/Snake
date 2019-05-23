@@ -33,12 +33,13 @@ void loop()
   UpdateSnake();
   MovePlayer();
   EatApple();
+  Die();
   DisplaySlate();
   delay(150);
   ClearSlate();
 }
 
-void DrawSnake()
+void DrawSnake() //creates snake
 {
   for(int i = 0; i < marker; i++)
   {
@@ -46,7 +47,7 @@ void DrawSnake()
   }
 }
 
-void MovePlayer()
+void MovePlayer() //allows player to move using direction buttons
 {
   CheckButtonsPress();
   if(Button_Up)
@@ -68,13 +69,13 @@ void MovePlayer()
 }
 
 
-void Spawn()
+void Spawn() //creates original apple
 {
     DrawPx(xapple, yapple, Green);
 }
 
 
-void EatApple()
+void EatApple() //creates new apple when apple is eaten
 {
   if(gotApple == true)
   {
@@ -139,6 +140,17 @@ void UpdateSnake() //runs loop backwards
     else
     {
       SnakeArray[0].x = 7;
+    }
+  }
+}
+
+void Die()
+{
+  for(int i = 1; i < marker; i++)
+  {
+    if(SnakeArray[0].x == SnakeArray[i].x && SnakeArray[0].y == SnakeArray[i].y)
+    {
+      marker = 1;
     }
   }
 }
