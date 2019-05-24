@@ -169,6 +169,3 @@ void Die()
     }
   }
 }
-
-//void LEDlights()
-//{
